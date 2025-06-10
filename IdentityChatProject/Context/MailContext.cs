@@ -9,7 +9,7 @@ namespace IdentityChatProject.Context
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 		{
 			//MSSQL Connect
-			optionsBuilder.UseSqlServer("Server=ASUS-PROART;initial Catalog=IdentityChatDb;integrated Security=true;trust server certificate=true");
+			optionsBuilder.UseSqlServer("Server=ASUS;initial Catalog=IdentityChatDb;integrated Security=true;trust server certificate=true");
 		}
 		public DbSet<Message> Messages { get; set; }
 	}
