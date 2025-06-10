@@ -1,0 +1,40 @@
+﻿@model List<IdentityChatProject.Entities.Message>
+
+<li class="icons dropdown">
+    <a href="javascript:void(0)" data-toggle="dropdown">
+        <i class="mdi mdi-bell-outline"></i>
+        <span class="badge badge-pill gradient-2">@Model.Count</span>
+    </a>
+    <div class="drop-down animated fadeIn dropdown-menu">
+        <div class="dropdown-content-heading d-flex justify-content-between">
+            <span>@Model.Count Okunmamış Mesaj</span>
+        </div>
+        <div class="dropdown-content-body">
+            <ul>
+                @if (Model.Count > 0)
+                {
+                    @foreach (var message in Model)
+                    {
+                        <li class="notification-unread">
+                            <a href="javascript:void()">
+                                <div class="notification-content">
+                                    <div class="notification-heading">@message.SenderEmail</div>
+                                    <div class="notification-timestamp">@message.SendDate</div>
+                                    <div class="notification-text">@message.Subject</div>
+                                </div>
+                            </a>
+                        </li>
+                    }
+                }
+                else
+                {
+                    <li class="notification-unread">
+                        <div class="notification-content">
+                            <div class="notification-text">Yeni mesaj yok.</div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</li>

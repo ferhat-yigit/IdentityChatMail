@@ -1,0 +1,63 @@
+﻿@model List<IdentityChatProject.Entities.Message>
+@{
+    ViewData["Title"] = "Inbox";
+    Layout = "~/Views/Shared/_MessageLayout.cshtml";
+    int count = 0;
+}
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="card">
+                <div class="card-body">
+                    @await Component.InvokeAsync("_MessageSidebarComponentPartial")
+                    <div class="email-right-box">
+                        <div role="toolbar" class="toolbar">
+                            <form method="get">
+                                <input type="text" name="p" value="@Context.Request.Query["p"]" placeholder="Ara..." class="form-control" style="width: 500px; display: inline-block;" />
+                                <input type="submit" value="Ara" class="btn btn-danger" />
+                            </form>
+                        </div>
+                        <br />
+                        <div class="email-list m-t-15">
+                            @foreach (var item in Model)
+                            {
+                                <div class="d-flex justify-content-between align-items-center border-bottom py-2 px-2"> 
+                                    <div class="d-flex align-items-center" style="width: 25px;">
+                                        @if (item.IsRead)
+                                        {
+                                            <a href="@Url.Action("ChangeIsReadToFalse", "Message", new { id = item.MessageId })" title="Okunmadı olarak işaretle">
+                                                <i class="fa fa-envelope-open text-success"></i>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="@Url.Action("ChangeIsReadToTrue", "Message", new { id = item.MessageId })" title="Okundu olarak işaretle">
+                                                <i class="fa fa-envelope text-danger"></i>
+                                            </a>
+                                        }
+                                    </div>
+
+                                    <a href="/Message/MessageDetail/@item.MessageId" class="flex-grow-1 mx-3 overflow-hidden text-decoration-none" style="color: inherit;">
+                                        <div class="fw-bold text-dark text-truncate">
+                                            <span class="text-muted">Kimden:<b>@item.SenderEmail</b></span><br />
+                                            <span class="text-muted">Konu: @item.Subject</span>
+                                        </div>
+                                        <div class="text-muted text-truncate">
+                                            @item.MessageDetail
+                                        </div>
+                                    </a>
+
+                                    <div class="text-muted text-end" style="width: 120px;font-style:italic;">
+                                        Tarih: @item.SendDate.ToShortDateString()
+                                    </div>
+                                </div>
+                            }
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
